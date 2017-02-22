@@ -19,6 +19,7 @@ feature {NONE} -- Initialization
 			-- Run application.
 		do
 			--| Add your code here
+			add_test(create {STUDENT_TESTS}.make)
 			add_test(create {INSTRUCTOR_TEST1}.make)
 			show_browser
 			--show_errors

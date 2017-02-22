@@ -33,7 +33,7 @@ feature
 			until
 				i > a_array.count
 			loop
-				table.extend (a_array.at (i).y, a_array.at (i).x)
+				extend (a_array.at (i).x, a_array.at (i).y)
 				i := i + 1
 			end
 		end
@@ -168,26 +168,46 @@ feature --queries
 feature --commands
 	add_all (other: like Current)
 		do
-
+			across other.domain as it
+			loop
+				extend (it.item, other.occurrences (it.item))
+			end
 		end
 
 	extend (a_key: G; a_quantity: INTEGER)
+		local
+			temp_quant: INTEGER
 		do
 			if table.has (a_key) then
 				--add a_quantity to the quantity associated with a_key
+				temp_quant := table.at (a_key)
+				table.remove (a_key)
+				table.extend (a_quantity + temp_quant, a_key)
 			else
 				table.extend (a_quantity, a_key)
 			end
 		end
 
 	remove (a_key: G; a_quantity: INTEGER)
+		local
+			temp_quant: INTEGER
 		do
-
+			temp_quant := table.at (a_key) - a_quantity
+			if temp_quant = 0 then
+				table.remove (a_key)
+			else
+				table.remove (a_key)
+				table.extend (temp_quant, a_key)
+			end
 		end
 
 	remove_all (other: like Current)
 		do
-
+			--remove the full quantity of each item in other from Current
+			across other.domain as it
+			loop
+				remove (it.item, other.occurrences (it.item))
+			end
 		end
 
 end
