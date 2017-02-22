@@ -33,13 +33,13 @@ feature
 			until
 				i > a_array.count
 			loop
-				table.extend (a_array.at (i).x, a_array.at (i).y)
+				table.extend (a_array.at (i).y, a_array.at (i).x)
 				i := i + 1
 			end
 		end
 
 feature
-	table: HASH_TABLE [G, INTEGER]
+	table: HASH_TABLE [INTEGER, G]
 
 feature --queries
 
@@ -69,7 +69,7 @@ feature --queries
 			until
 				table.after
 			loop
-				sorted.extend (table.item_for_iteration)
+				sorted.extend (table.key_for_iteration)
 				table.forth
 			end
 
@@ -88,24 +88,28 @@ feature --queries
 	debug_output: STRING
 		do
 			create Result.make_from_string ("{")
-			from
-				table.start
-			until
-				table.after
-			loop
-				Result.append ("[")
-				Result.append (table.item_for_iteration)
-				Result.append (",")
-				Result.append (table.key_for_iteration.out)
-				Result.append ("],")
-				table.forth
-			end
+--			from
+--				table.start
+--			until
+--				table.after
+--			loop
+--				Result.append ("[")
+--				Result.append (table.item_for_iteration)
+--				Result.append (",")
+--				Result.append (table.key_for_iteration.out)
+--				Result.append ("],")
+--				table.forth
+--			end
 			Result.append ("}")
 		end
 
 	new_cursor: ITERATION_CURSOR [G]
+		local
+			i: ARRAY[G]
 		do
-			Result := table.new_cursor
+			create i.make_empty
+			Result := i.new_cursor
+--			Result := table.new_cursor
 		end
 
 	occurrences alias "[]" (key: G): INTEGER
@@ -116,8 +120,8 @@ feature --queries
 			until
 				table.after
 			loop
-				if table.item_for_iteration.as_string_8 ~ key then
-					Result := Result + table.key_for_iteration
+				if table.key_for_iteration.string ~ key then
+					Result := Result + table.item_for_iteration
 				end
 				table.forth
 			end
@@ -131,16 +135,16 @@ feature --queries
 	is_subset_of alias "|<:" (other: like Current): BOOLEAN
 		do
 			Result := true
-			from
-				table.start
-			until
-				table.after
-			loop
-				if not other.has(table.item_for_iteration) then
-					Result := false
-				end
-				table.forth
-			end
+--			from
+--				table.start
+--			until
+--				table.after
+--			loop
+--				if not other.has(table.item_for_iteration) then
+--					Result := false
+--				end
+--				table.forth
+--			end
 		end
 
 feature --commands
@@ -151,11 +155,11 @@ feature --commands
 
 	extend (a_key: G; a_quantity: INTEGER)
 		do
-			if has(a_key) then
+--			if has(a_key) then
 
-			else
-				table.extend (a_key, a_quantity)
-			end
+--			else
+--				table.extend (a_key, a_quantity)
+--			end
 		end
 
 	remove (a_key: G; a_quantity: INTEGER)
