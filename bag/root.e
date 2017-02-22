@@ -8,6 +8,7 @@ class
 
 inherit
 	ARGUMENTS
+	ES_SUITE
 
 create
 	make
@@ -18,7 +19,10 @@ feature {NONE} -- Initialization
 			-- Run application.
 		do
 			--| Add your code here
-			print ("Hello Eiffel World!%N")
+			add_test(create {INSTRUCTOR_TEST1}.make)
+			show_browser
+			--show_errors
+			run_espec
 		end
 
 end
