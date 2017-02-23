@@ -24,8 +24,6 @@ feature
 		end
 
 	make_from_tupled_array (a_array: ARRAY [TUPLE [x: G; y: INTEGER]])
-		local
-			i: INTEGER
 		do
 			create table.make (0)
 			across a_array as it
