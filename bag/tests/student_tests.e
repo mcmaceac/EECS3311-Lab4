@@ -22,6 +22,7 @@ feature {NONE} -- Initialization
 			add_boolean_case (agent t1)
 			add_boolean_case (agent t2)
 			add_boolean_case (agent t3)
+			add_violation_case (agent t4)
 		end
 
 feature -- setup
@@ -90,6 +91,14 @@ feature --tests
 			check
 				Result
 			end
+		end
+
+	t4
+		local
+			bag1: MY_BAG[STRING]
+		do
+			comment("t4: testing items with 0 occurrences")
+			bag1 := <<["one", 0], ["two", 0], ["three", 0], ["four", 4]>>
 		end
 
 end
