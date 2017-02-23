@@ -28,13 +28,9 @@ feature
 			i: INTEGER
 		do
 			create table.make (0)
-			from
-				i := 1
-			until
-				i > a_array.count
+			across a_array as it
 			loop
-				extend (a_array.at (i).x, a_array.at (i).y)
-				i := i + 1
+				extend (it.item.x, it.item.y)
 			end
 		end
 
