@@ -41,7 +41,7 @@ feature --tests
 			b1: MY_BAG[STRING]
 			b2: MY_BAG[STRING]
 		do
-			comment("Test extend with duplicate key")
+			comment("t1: Test extend with duplicate key")
 			b1 := <<["nuts", 4], ["bolts", 5]>>
 			b2 := <<["nuts", 4], ["bolts", 6]>>
 			b1.extend ("bolts", 1)
@@ -53,7 +53,7 @@ feature --tests
 			bag1: MY_BAG[STRING]
 			bag2: MY_BAG[STRING]
 		do
-			comment("Testing non-proper subset")
+			comment("t2: Testing non-proper subset")
 			bag1 := <<["one", 1], ["two", 2], ["three", 3]>>
 			bag2 := <<["one", 2], ["two", 2], ["three", 3]>>
 			Result := bag1  |<: bag1
@@ -69,7 +69,7 @@ feature --tests
 
 	t3: BOOLEAN
 		do
-			comment("Testing is_non_negative")
+			comment("t3: Testing is_non_negative")
 			Result := bag.is_nonnegative (<<["one", 1], ["two", 2], ["three", 3], ["negative", -1]>>) = false
 			check
 				Result
