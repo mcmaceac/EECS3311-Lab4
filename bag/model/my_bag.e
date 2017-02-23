@@ -5,7 +5,7 @@ note
 	revision: "$Revision$"
 
 class
-	MY_BAG [G -> {STRING}]
+	MY_BAG [G -> {HASHABLE, COMPARABLE}]
 inherit
 	ADT_BAG [G]
 	DEBUG_OUTPUT
@@ -97,7 +97,7 @@ feature --queries
 				Result.append ("[")
 				Result.append (table.item_for_iteration.out)
 				Result.append (",")
-				Result.append (table.key_for_iteration)
+				--Result.append (table.key_for_iteration)
 				Result.append ("],")
 				table.forth
 			end

@@ -5,7 +5,7 @@ note
 	revision: "$Revision$"
 
 class
-	MY_BAG_ITERATION_CURSOR[G -> {STRING}]
+	MY_BAG_ITERATION_CURSOR[G -> {HASHABLE, COMPARABLE}]
 
 inherit
 	ITERATION_CURSOR[G]
