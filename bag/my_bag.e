@@ -152,16 +152,10 @@ feature --queries
 
 	is_subset_of alias "|<:" (other: like Current): BOOLEAN
 		do
-			Result := true
-			from
-				table.start
-			until
-				table.after
-			loop
-				if not other.has(table.key_for_iteration) then
-					Result := false
-				end
-				table.forth
+			Result := across domain as it
+			all
+				other.has (it.item) and
+				occurrences (it.item) <= other.occurrences (it.item)
 			end
 		end
 
