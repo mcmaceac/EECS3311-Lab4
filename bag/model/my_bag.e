@@ -32,7 +32,7 @@ feature
 			end
 		end
 
-feature
+feature {MY_BAG}
 	table: HASH_TABLE [INTEGER, G]
 
 feature --queries
