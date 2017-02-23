@@ -8,7 +8,6 @@ class
 	MY_BAG [G -> {HASHABLE, COMPARABLE}]
 inherit
 	ADT_BAG [G]
-	DEBUG_OUTPUT
 
 create
 	make_empty,
@@ -17,7 +16,7 @@ create
 convert
 	make_from_tupled_array ({attached ARRAY [attached TUPLE [G, INTEGER]]})
 
-feature
+feature --initialization
 	make_empty
 		do
 			create table.make (0)
@@ -32,7 +31,7 @@ feature
 			end
 		end
 
-feature {MY_BAG}
+feature {MY_BAG} --attributes
 	table: HASH_TABLE [INTEGER, G]
 
 feature --queries
@@ -84,24 +83,6 @@ feature --queries
 				sorted.forth
 				i := i + 1
 			end
-		end
-
-	debug_output: STRING
-		do
-			create Result.make_from_string ("{")
-			from
-				table.start
-			until
-				table.after
-			loop
-				Result.append ("[")
-				Result.append (table.item_for_iteration.out)
-				Result.append (",")
-				--Result.append (table.key_for_iteration)
-				Result.append ("],")
-				table.forth
-			end
-			Result.append ("}")
 		end
 
 	new_cursor: MY_BAG_ITERATION_CURSOR [G]
