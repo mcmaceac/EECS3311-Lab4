@@ -1,7 +1,7 @@
 note
 	description: "Summary description for {MY_BAG}."
-	author: ""
-	date: "$Date$"
+	author: "Matt MacEachern"
+	date: "02/23/2017"
 	revision: "$Revision$"
 
 class
