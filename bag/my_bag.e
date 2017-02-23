@@ -44,27 +44,13 @@ feature
 feature --queries
 
 	bag_equal alias "|=|"(other: like Current): BOOLEAN
-		local
-			this_dom: ARRAY[G]
-			other_dom: ARRAY[G]
-			i: INTEGER
 		do
-			Result := true
-			this_dom := domain
-			other_dom := other.domain
-
-			if this_dom /~ other_dom then
+			if domain /~ other.domain then
 				Result := false
 			else
-				from
-					i := 1
-				until
-					i > this_dom.count or not Result
-				loop
-					if not (table.at (this_dom[i]) = other.table.at (this_dom[i])) then
-						Result := false
-					end
-					i := i + 1
+				Result := across domain as it
+				all
+					table.at (it.item) = other.table.at (it.item)
 				end
 			end
 		end
@@ -133,21 +119,20 @@ feature --queries
 	occurrences alias "[]" (key: G): INTEGER
 		do
 			Result := 0
-			from
-				table.start
-			until
-				table.after
+			across domain as it
 			loop
-				if table.key_for_iteration ~ key then
-					Result := Result + table.item_for_iteration
+				if it.item ~ key then
+					Result := Result + table.at (it.item)
 				end
-				table.forth
 			end
 		end
 
-	is_nonnegative (a_array: ARRAY [TUPLE [G, INTEGER]]): BOOLEAN
+	is_nonnegative (a_array: ARRAY [TUPLE [x: G; y: INTEGER]]): BOOLEAN
 		do
-			Result := true
+			Result := across a_array as it
+			all
+				it.item.y >= 0
+			end
 		end
 
 	is_subset_of alias "|<:" (other: like Current): BOOLEAN

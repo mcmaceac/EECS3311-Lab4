@@ -21,6 +21,7 @@ feature {NONE} -- Initialization
 		do
 			add_boolean_case (agent t1)
 			add_boolean_case (agent t2)
+			add_boolean_case (agent t3)
 		end
 
 feature -- setup
@@ -48,9 +49,44 @@ feature --tests
 		end
 
 	t2: BOOLEAN
+		local
+			bag1: MY_BAG[STRING]
+			bag2: MY_BAG[STRING]
 		do
 			comment("Testing non-proper subset")
-			Result := bag  |<: bag
+			bag1 := <<["one", 1], ["two", 2], ["three", 3]>>
+			bag2 := <<["one", 2], ["two", 2], ["three", 3]>>
+			Result := bag1  |<: bag1
+			check
+				Result
+			end
+
+			Result := bag1 |<: bag2 and not (bag2 |<: bag1)
+			check
+				Result
+			end
+		end
+
+	t3: BOOLEAN
+		do
+			comment("Testing is_non_negative")
+			Result := bag.is_nonnegative (<<["one", 1], ["two", 2], ["three", 3], ["negative", -1]>>) = false
+			check
+				Result
+			end
+			Result := bag.is_nonnegative (<<["one", 1], ["negative", -1], ["two", 2], ["three", 3]>>) = false
+			check
+				Result
+			end
+			Result := bag.is_nonnegative (<<["negative", -1], ["one", 1], ["two", 2], ["three", 3]>>) = false
+			check
+				Result
+			end
+			Result := bag.is_nonnegative (<<["one", 1], ["two", 2], ["three", 3]>>)
+			check
+				Result
+			end
+			Result := bag.is_nonnegative (<<["one", 0], ["two", 0], ["three", 0]>>)
 			check
 				Result
 			end
